@@ -47,12 +47,11 @@ public class BankAccount {
             return false;
         }
 
-        String[] invalidChar = {"!","#","$","&"};
-        int count = 0;
-        for (int i = 0; i < invalidChar.length; i++){
-            String symbol = invalidChar[i];
-            count += email.chars().filter(ch -> ch == symbol.charAt(0)).count();count += email.chars().filter(ch -> ch == symbol.charAt(0)).count();
-            if (count > 0){
+        String[] invalidNumChar = {"-","_"};
+        for (int i = 0; i < invalidNumChar.length; i++){
+            String symbol = invalidNumChar[i];
+            long count = email.chars().filter(ch -> ch == symbol.charAt(0)).count();
+            if (count > 1){
                 return false;
             }
         }
@@ -77,9 +76,18 @@ public class BankAccount {
         else if (session[0].indexOf('_') == session[0].length()-1){
             return false;
         }
+        
+        if(session[1].chars().filter(en -> en == '.').count() > 1){
+            return false;
+        }
+        
+        String[] endPiece = session[1].split(".");
+        if(endPiece[endPiece.length - 1].length() < 2){
+            return false;
+        }
         else{
             return true;
         }
-
     }
+
 }
