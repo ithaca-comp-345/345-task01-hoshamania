@@ -81,7 +81,7 @@ public class BankAccount {
             return false;
         }
         
-        String[] endPiece = session[1].split(".");
+        String[] endPiece = session[1].split("\\.");
         if(endPiece[endPiece.length - 1].length() < 2){
             return false;
         }
