@@ -53,6 +53,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("-aaa@abcd.com"));
         //It also can't have special character without letters and/or numbers wrap around it 
         assertFalse(BankAccount.isEmailValid("aaa-@abcd.com"));
+        assertFalse(BankAccount.isEmailValid("aa#aa@abcd.com"));
 
         //It's boundary case must have characters if using more than one period
         assertTrue(BankAccount.isEmailValid("aaa.aaa@abcd.aa"));
@@ -64,6 +65,8 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("aaa.aaa@abcd"));
         //Can't have more than 1 period after the @ symbol as the boundary case
         assertFalse(BankAccount.isEmailValid("aaa.aaa@abc.d.a"));
+        assertFalse(BankAccount.isEmailValid("aaa.aaa@ab#cd.com"));
+        assertFalse(BankAccount.isEmailValid("aaa.aaa@abcd.c#m"));
 
         //I'm not sure what boundary case or equivalence class are misssing because
         //I don't fully understand the concept for both really. I'm pretty sure that boundary
