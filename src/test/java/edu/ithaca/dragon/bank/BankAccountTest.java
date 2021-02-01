@@ -18,8 +18,13 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
-        assertEquals(100, bankAccount.getBalance());
+        assertEquals(100, bankAccount.getBalance()); //equivalence case, removing anything less than the balance should be fine/the same
+        
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+        assertThrows(NegativeDrawException.class, () -> bankAccount.withdraw(-100));
+        
+        bankAccount.withdraw(100);
+        assertEquals(0, bankAccount.getBalance());
     }
 
     @Test
