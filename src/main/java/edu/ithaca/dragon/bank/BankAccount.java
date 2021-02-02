@@ -18,6 +18,17 @@ public class BankAccount {
         }
     }
 
+
+    /**
+     * 
+     * @param amount the amount being checked
+     * @return false if Amount is more than two decimal places or smaller than 0, true if two decimal places or less and positive
+     * 
+     */
+    public static boolean isAmountValid(double amount){
+        return false;
+    }
+
     public double getBalance(){
         return balance;
     }
@@ -31,7 +42,7 @@ public class BankAccount {
      */
     public void withdraw (double amount) throws InsufficientFundsException{
         if (amount <= 0){
-            throw new NegativeDrawException("Can't have a negative amount");
+            throw new InsufficientFundsException("Can't have a negative amount");
         }
         else if(amount <= balance){
             balance -= amount;

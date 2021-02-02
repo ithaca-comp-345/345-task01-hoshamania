@@ -7,6 +7,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
     @Test
+    void isAmountValidTest(){
+
+        assertTrue(BankAccount.isAmountValid(200));
+        //Equivalence case, any number larger than or equal to zero is okay
+        assertFalse(BankAccount.isAmountValid(-200));
+        //Equivalence case, any number smaller than zero is false
+        assertTrue(BankAccount.isAmountValid(0.1));
+        //Equivalence case, less than or equal to two decimal places is okay
+        assertTrue(BankAccount.isAmountValid(0));
+        //Boundary case, 0 and greater is okay, so 0 is on the boundary
+        assertTrue(BankAccount.isAmountValid(0.01));
+        //Boundary case, two decimal places is okay but no more
+        assertFalse(BankAccount.isAmountValid(0.001));
+        //Boundary case, more than two decimal places is false
+        assertFalse(BankAccount.isAmountValid(-0.01));
+        //Boundary case, anything less than zero should be false, this is on the edge of that
+
+    }
+
+    @Test
     void getBalanceTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
@@ -21,7 +41,7 @@ class BankAccountTest {
         assertEquals(100, bankAccount.getBalance()); //equivalence case, removing anything less than the balance should be fine/the same
         
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
-        assertThrows(NegativeDrawException.class, () -> bankAccount.withdraw(-100));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-100));
         
         bankAccount.withdraw(100);
         assertEquals(0, bankAccount.getBalance());
