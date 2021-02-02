@@ -70,7 +70,12 @@ public class BankAccount {
      * @throws IllegalArgumentException when amount is negative or has more than 2 decimal places
      */
     public void deposit (double amount) {
-        
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Cannot have negative amount, or amount with more than 2 decimal points.");
+        }
+        else {
+            balance += amount;
+        }
     }
 
 
