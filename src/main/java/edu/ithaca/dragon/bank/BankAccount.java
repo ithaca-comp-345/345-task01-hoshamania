@@ -77,7 +77,15 @@ public class BankAccount {
             balance += amount;
         }
     }
+    /**
+     * 
+     * @param withdrawAccount account having money taken out of
+     * @param depositedAccount account having money put in
+     * @param amount the amount being transferred
+     */
+    public void transfer(BankAccount withdrawAccount, BankAccount depositedAccount, double amount){
 
+    }
 
     public static boolean isEmailValid(String email){
         if (email.indexOf('@') == -1){
