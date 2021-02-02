@@ -41,10 +41,13 @@ class BankAccountTest {
         assertEquals(100, bankAccount.getBalance()); //equivalence case, removing anything less than the balance should be fine/the same
         
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-100));
+        
         
         bankAccount.withdraw(100);
         assertEquals(0, bankAccount.getBalance());
+
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(0.001));
     }
 
     @Test
@@ -108,6 +111,9 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -100));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 0.001));
     }
 
 }
