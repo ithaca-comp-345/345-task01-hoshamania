@@ -96,6 +96,16 @@ public class BankAccount {
             }
         }
 
+        String[] invalidChar = {"!","#","$","&"};
+        int count = 0;
+        for (int i = 0; i < invalidChar.length; i++){
+            String current = invalidChar[i];
+            count += email.chars().filter(ch -> ch == current.charAt(0)).count();
+            if (count > 0){
+                return false;
+            }
+        }
+
         String[] session = email.split("@", 2);
         
         if(session[0].indexOf(".") == 0){
@@ -117,7 +127,7 @@ public class BankAccount {
             return false;
         }
         
-        if(session[1].chars().filter(en -> en == '.').count() > 1){
+        if(!(session[1].chars().filter(en -> en == '.').count() == 1)){
             return false;
         }
         
