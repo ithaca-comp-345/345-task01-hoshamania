@@ -34,6 +34,33 @@ class BankAccountTest {
     }
 
     @Test
+    void depositTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-100));
+        //Equivalence case, same test as before with isAmountValid
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(0.001));
+        //Border case, more than 2 decimals not allowed
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-0.01));
+        //Border case, just under 0 with 2 decimal places, what is allowed
+
+        bankAccount.deposit(100);
+        assertEquals(300, bankAccount.getBalance());
+        //Equivalence case, any amount 0 and up is good
+        bankAccount.deposit(0);
+        assertEquals(300, bankAccount.getBalance());
+        //Boundary case, 0 is at the threshold of not okay
+        bankAccount.deposit(0.01);
+        assertEquals(300.01, bankAccount.getBalance());
+        //Boundary case, 2 decimals is the most allowed
+        bankAccount.deposit(0.1);
+        assertEquals(300.11, bankAccount.getBalance());
+        //Equivalence case, 2 decimals and less is allowed, this is not on the edge of that
+
+    }
+
+
+    @Test
     void withdrawTest() throws InsufficientFundsException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
