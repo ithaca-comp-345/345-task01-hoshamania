@@ -78,6 +78,38 @@ class BankAccountTest {
     }
 
     @Test
+    void transferTest() throws InsufficientFundsException{
+        BankAccount ba1 = new BankAccount("a@b.com", 200);
+        BankAccount ba2 = new BankAccount("b@a.com", 200);
+
+        BankAccount.transfer(ba1, ba2, 100);
+        //Equivalence case, pulling 100 from an account with 200 and putting it into an account isn't pushing any boundaries
+        assertEquals(100, ba1.getBalance());
+        assertEquals(300, ba2.getBalance());
+
+        assertThrows(InsufficientFundsException.class, () -> BankAccount.transfer(ba1, ba2, 200));
+        //Equivalence, any amount over the balance in the account being withdrawn from is not allowed
+
+        assertThrows(IllegalArgumentException.class, () -> BankAccount.transfer(ba1, ba2, -200));
+        //Equivalence, any negative amount should not be allowed
+
+        assertThrows(IllegalArgumentException.class, () -> BankAccount.transfer(ba1, ba2, 0.001));
+        //Border, any number with more than 2 decimal points is false, 3 decimal points is on the boundary
+
+        assertThrows(IllegalArgumentException.class, () -> BankAccount.transfer(ba1, ba2, 0));
+
+        BankAccount.transfer(ba1, ba2, 0.01);
+        assertEquals(99.99, ba1.getBalance());
+        assertEquals(300.01, ba2.getBalance());
+        //Border case, right within acceptable 2 decimal limit
+
+        BankAccount.transfer(ba2, ba1, 100.1);
+        assertEquals(200, ba1.getBalance());
+        assertEquals(200, ba2.getBalance());
+        //Equivalence case, should be able to transfer money either way, to either account
+    }
+
+    @Test
     void isEmailValidTest(){
         //It's boundary case is that it needs username and domain name to be at least one character 
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
