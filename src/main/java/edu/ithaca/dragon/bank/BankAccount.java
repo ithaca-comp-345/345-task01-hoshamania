@@ -84,8 +84,14 @@ public class BankAccount {
      * @param depositedAccount account having money put in
      * @param amount the amount being transferred
      */
-    public static void transfer(BankAccount withdrawAccount, BankAccount depositedAccount, double amount){
-
+    public static void transfer(BankAccount withdrawAccount, BankAccount depositedAccount, double amount) throws InsufficientFundsException{
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Cannot have negative amount, or amount with more than 2 decimal points");
+        }
+        else{
+            withdrawAccount.withdraw(amount);
+            depositedAccount.deposit(amount);
+        }
     }
 
     public static boolean isEmailValid(String email){

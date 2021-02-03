@@ -96,14 +96,12 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> BankAccount.transfer(ba1, ba2, 0.001));
         //Border, any number with more than 2 decimal points is false, 3 decimal points is on the boundary
 
-        assertThrows(IllegalArgumentException.class, () -> BankAccount.transfer(ba1, ba2, 0));
-
         BankAccount.transfer(ba1, ba2, 0.01);
         assertEquals(99.99, ba1.getBalance());
         assertEquals(300.01, ba2.getBalance());
         //Border case, right within acceptable 2 decimal limit
 
-        BankAccount.transfer(ba2, ba1, 100.1);
+        BankAccount.transfer(ba2, ba1, 100.01);
         assertEquals(200, ba1.getBalance());
         assertEquals(200, ba2.getBalance());
         //Equivalence case, should be able to transfer money either way, to either account
